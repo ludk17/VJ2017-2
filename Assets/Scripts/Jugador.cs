@@ -13,9 +13,11 @@ public class Jugador : MonoBehaviour {
 	private const int QUIETO = 0;
 	private const int CORRER = 1;
 	private const int SALTAR = 2;
+	private const int ATACAR = 3;
 
 	public int saltos = 0;
 	public bool estaEnElSuelo = true;
+	public bool estaAtacando = false;
 
 
 	// Use this for initialization
@@ -58,17 +60,33 @@ public class Jugador : MonoBehaviour {
 			saltos++;
 		}
 
+		if (Input.GetKey (KeyCode.X)) {
+			animator.SetInteger ("Estado", ATACAR);		
+			estaAtacando = true;
+		}
+
+		if (Input.GetKeyUp (KeyCode.X)) {
+			animator.SetInteger ("Estado", QUIETO);		
+			estaAtacando = false;
+		}
+
+
 		//else {			
 		//	animator.SetInteger ("Estado", QUIETO);
 		//}
 	}
 
 
-	void OnCollisionEnter2D (Collision2D col)
+	void OnCollisionEnter2D (Collision2D collision)
 	{
-		if(col.gameObject.tag == "Enemigo")
+		if(collision.gameObject.tag == "Enemigo")
 		{
-			Debug.Log ("Morir");
+			if (!estaAtacando) {
+				Debug.Log ("Morir");
+				Destroy (gameObject);
+			} else {
+				Destroy (collision.gameObject);
+			}
 		}
 		//else {
 			//saltos = 0;

@@ -22,7 +22,5 @@ public class DetectorDeSuelo : MonoBehaviour {
 		jugador.saltos = 0;
 		jugador.estaEnElSuelo = true;
 		jugador.animator.SetInteger ("Estado", 0);
-		Debug.Log ("colision");
-
 	}
 }
