@@ -10,6 +10,14 @@ public class Jugador : MonoBehaviour {
 	private Rigidbody2D rb;
 	public Animator animator;
 
+	public Transform shurikenPosition;
+	public GameObject shuriken;
+
+	public Transform shurikenIzquierdaPosition;
+	public GameObject shurikenIzquierda;
+
+	public int direccion = 0;
+
 	private const int QUIETO = 0;
 	private const int CORRER = 1;
 	private const int SALTAR = 2;
@@ -68,6 +76,15 @@ public class Jugador : MonoBehaviour {
 			animator.SetInteger ("Estado", QUIETO);
 		}
 
+		if (Input.GetKeyDown (KeyCode.A)) {
+			if(direccion == 0)
+				Instantiate (shuriken, shurikenPosition.position, Quaternion.identity);
+			else
+				Instantiate (shurikenIzquierda, shurikenIzquierdaPosition.position, Quaternion.identity);
+
+		}
+
+
 		//if (Input.GetKeyUp (KeyCode.X)) {
 			//animator.SetInteger ("Estado", QUIETO);		
 			//estaAtacando = false;
@@ -96,6 +113,7 @@ public class Jugador : MonoBehaviour {
 			animator.SetInteger ("Estado", CORRER);
 			rb.velocity = new Vector2(velocidad, rb.velocity.y);
 			transform.localScale = new Vector3(1, 1, 1);
+			direccion = 0;
 		}
 
 		if (Input.GetKeyUp (KeyCode.RightArrow)) {
@@ -113,6 +131,7 @@ public class Jugador : MonoBehaviour {
 			rb.velocity = new Vector2(velocidad * -1, rb.velocity.y);
 			transform.localScale = new Vector3(-1, 1, 1);
 			estado = CORRER;
+			direccion = 1;
 		}
 
 		if (Input.GetKeyUp (KeyCode.LeftArrow)) {
