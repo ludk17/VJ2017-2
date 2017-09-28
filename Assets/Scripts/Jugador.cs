@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Jugador : MonoBehaviour {
 
@@ -12,6 +13,8 @@ public class Jugador : MonoBehaviour {
 
 	public Transform shurikenPosition;
 	public GameObject shuriken;
+
+	public Text puntajeText;
 
 	public Transform shurikenIzquierdaPosition;
 	public GameObject shurikenIzquierda;
@@ -29,6 +32,9 @@ public class Jugador : MonoBehaviour {
 	public bool estaAtacando = false;
 
 	private int estado = 0;
+
+	public int PuntosPorZombie = 5;
+	public int Puntaje = 0;
 
 
 	// Use this for initialization
@@ -52,8 +58,7 @@ public class Jugador : MonoBehaviour {
 			saltos++;
 		}
 
-		if (Input.GetKeyDown (KeyCode.X)) {			
-			Debug.Log ("Atacar");
+		if (Input.GetKeyDown (KeyCode.X)) {						
 			animator.SetInteger ("Estado", ATACAR);
 			estaAtacando = true;
 		}
@@ -97,11 +102,12 @@ public class Jugador : MonoBehaviour {
 	{
 		if(collision.gameObject.tag == "Enemigo")
 		{
-			if (!estaAtacando) {
-				Debug.Log ("Morir");
+			if (!estaAtacando) {				
 				Destroy (gameObject);
 			} else {
 				Destroy (collision.gameObject);
+				Puntaje = Puntaje + PuntosPorZombie;
+				Debug.Log (Puntaje);
 			}
 		}
 

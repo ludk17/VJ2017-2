@@ -7,9 +7,13 @@ public class ShurikenIzquierda : MonoBehaviour {
 	public int velocidad = 5;
 
 	Rigidbody2D rb;
+
+	private Jugador jugador;
+
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody2D> ();
+		jugador = FindObjectOfType(typeof(Jugador)) as Jugador;
 	}
 	
 	// Update is called once per frame
@@ -23,6 +27,9 @@ public class ShurikenIzquierda : MonoBehaviour {
 		{			
 			Destroy (collision.gameObject);
 			Destroy (gameObject);
+			jugador.Puntaje += 5;
+			jugador.puntajeText.text = jugador.Puntaje.ToString();
+
 		}
 
 	}
